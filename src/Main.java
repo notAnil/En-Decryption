@@ -46,6 +46,32 @@ public class Main {
         }
 
     }
+    public static String encrypter(String parts){
+        parts = parts.toLowerCase(Locale.ROOT);
+        String [] res= new String[parts.length()];
+        for(int i = 0; i<parts.length();i++){
+            res[i]=parts.substring(i,i+1);
+        }
+        int ran=0;
+        for (int i=0; i<res.length;i+=ran+2) {          //if you increase the sum between ran and the integer it will be less random
+            ran = (int) (Math.random() * (res.length));  //but il will effect the shorter words less
+            String temp = res[i];
+            res[i] = res[ran];
+            res[ran] = temp;
+            ArrayList<Integer> begone = new ArrayList<Integer>(2);
+            begone.add(i);
+            begone.add(ran);
+            code.add(begone);
+        }
+
+        //holder =res;  no need to this anymore
+        String fin="";
+        for(int k=0;k<res.length;k++){
+            fin+=res[k];
+        }
+        System.out.println(code);
+        return fin;
+    }
    /* public static String deshuffler(){ //update
         String res="";
         for (int i = code.size()-1;i>=0;i--){
@@ -78,7 +104,7 @@ public class Main {
     public static String doItAgain(int n, String value){
         String res = value;
         for (int i=0;i<n;i++){
-            res = shuffler(res);
+            res = encrypter(res);
             record();
         }
         System.out.println(behold);
