@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import  java.util.*;
 public class Main {
     public static Scanner sc = new Scanner(System.in);
@@ -54,7 +57,7 @@ public class Main {
         }
         int ran=0;
         for (int i=0; i<res.length;i+=ran+2) {          //if you increase the sum between ran and the integer it will be less random
-            ran = (int) (Math.random() * (res.length));  //but il will effect the shorter words less
+            ran = (int) (Math.random() * (res.length));  //but it will effect the shorter words less
             String temp = res[i];
             res[i] = res[ran];
             res[ran] = temp;
@@ -116,8 +119,16 @@ public class Main {
         code = new ArrayList<>();
 
     }
+    public static void fileRecord(){ // will store the behold arraylist in the key.txt file in an unique way
+    try {
+        BufferedWriter file = new BufferedWriter(new FileWriter("key.txt"));
+        file.write("This is the storage");
+        file.close();
+    }catch (IOException e){e.printStackTrace();}
+    }
     public static void main(String[] args) {
         makeAChoice();
+        fileRecord();
 
     }
 }
