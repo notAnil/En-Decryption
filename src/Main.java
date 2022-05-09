@@ -3,6 +3,8 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
     private static String[] holder;
+    private static ArrayList<ArrayList<ArrayList<Integer>>> behold = new ArrayList<>();
+
     public static String shuffler(String parts){
 
         parts = parts.toLowerCase(Locale.ROOT);
@@ -62,8 +64,11 @@ public class Main {
         gir=gir.toLowerCase(Locale.ROOT);
         if(gir.equals("encryption")){
             System.out.println("What is it to shuffle");
-            String parts=sc.nextLine();
-            System.out.println(shuffler(parts));
+            String parts = sc.nextLine();
+            System.out.println("How many times?");
+            int n = sc.nextInt();
+
+            System.out.println(doItAgain(n,parts));
         } /*else if (gir.equals("decryption")){
             System.out.println(shuffler());
             System.out.println(deshuffler());
@@ -74,12 +79,19 @@ public class Main {
         String res = value;
         for (int i=0;i<n;i++){
             res = shuffler(res);
+            record();
         }
+        System.out.println(behold);
         return res;
     }
+    public static void record(){
+
+        behold.add(code);
+        code = new ArrayList<>();
+
+    }
     public static void main(String[] args) {
-        //makeAChoice();
-        String res = doItAgain(11,"Shuffled to the end");
-        System.out.println(res);
+        makeAChoice();
+
     }
 }
