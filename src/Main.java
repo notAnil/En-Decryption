@@ -3,9 +3,8 @@ public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
     private static String[] holder;
-    public static String shuffler(){
-        System.out.println("What is it to shuffle");
-        String parts=sc.nextLine();
+    public static String shuffler(String parts){
+
         parts = parts.toLowerCase(Locale.ROOT);
         String [] res= new String[parts.length()];
         for(int i = 0; i<parts.length();i++){
@@ -32,6 +31,7 @@ public class Main {
     }
     public static void shuffleHelper(int start, int end, String [] help){
         int ran = 0;
+
         for (int i=start; i<end;i+=ran+2){          //if you increase the sum between ran and the integer it will be less random
             ran =(int)(Math.random()*(end-start));  //but il will effect the shorter words less
             String temp = help[i];
@@ -44,7 +44,7 @@ public class Main {
         }
 
     }
-    public static String deshuffler(){ //update
+   /* public static String deshuffler(){ //update
         String res="";
         for (int i = code.size()-1;i>=0;i--){
             String temp = holder[code.get(i).get(1)];
@@ -55,21 +55,31 @@ public class Main {
             res+=holder[j];
         }
         return res;
-    }
+    }*/
     public static void makeAChoice(){
         System.out.println("what do you want?(Encryption or decryption)");
         String gir= sc.nextLine();
         gir=gir.toLowerCase(Locale.ROOT);
         if(gir.equals("encryption")){
-            System.out.println(shuffler());
-        } else if (gir.equals("decryption")){
+            System.out.println("What is it to shuffle");
+            String parts=sc.nextLine();
+            System.out.println(shuffler(parts));
+        } /*else if (gir.equals("decryption")){
             System.out.println(shuffler());
             System.out.println(deshuffler());
-        }
+        }*/
 
     }
-
+    public static String doItAgain(int n, String value){
+        String res = value;
+        for (int i=0;i<n;i++){
+            res = shuffler(res);
+        }
+        return res;
+    }
     public static void main(String[] args) {
-        makeAChoice();
+        //makeAChoice();
+        String res = doItAgain(11,"Shuffled to the end");
+        System.out.println(res);
     }
 }
