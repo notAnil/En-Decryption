@@ -2,12 +2,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import  java.util.*;
+import java.io.*;
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
     private static String[] holder;
     private static ArrayList<ArrayList<ArrayList<Integer>>> behold = new ArrayList<>();
-    private static String stringSetOfXor = "sagjdskadhdjsklvdsmlcajh!++^13256788&+/&?=)(/=^()^=+)^=?^34653)'?^)+')+'/&JDVLSGDSsghzjıfapskkl";
+    private static String stringSetOfXor = "abcd!=6";
     private static char[] charSetForXor;
     private static int[][] Xored;
 
@@ -114,9 +115,10 @@ public class Main {
             res = encrypter(res);
             record();
         }
-        /*for (int i=0;i<n;i++){
+        for (int i=0;i<n;i++){
             res=Xorer(i,res);
-        }*/
+        }
+        System.out.println(res.length());
         System.out.println(behold);
         return res;
     }
@@ -146,22 +148,36 @@ public class Main {
         for(int i=0;i<girdi.length();i++){
             x=Math.random();
             result[i]=girdi.charAt(i);
+
             if (x>0.49){
+
+                do{
+                result[i]='\0';
                 int indexOfKey = (int) (Math.random()*charSetForXor.length);
                 char toBeChanged=girdi.charAt(i);
                 char res=(char) (toBeChanged^charSetForXor[indexOfKey]);
                 Xored[n][0]= i;
                 Xored[n][1]=indexOfKey;
                 result[i]=res;
-                reThinking+=result[i];
-            }
+
+            }while (result[i]=='\0');
+            reThinking+= Character.toString(result[i]) ;
+
+            }else reThinking+=result[i];
         }
         return reThinking;
     }
+
     public static void main(String[] args) {
         converter();
         makeAChoice();
         fileRecord();
+        for (int i=0;i< Xored.length;i++){
+            for (int j=0;j<Xored[0].length;j++){
+                System.out.print(Xored[i][j]+" ");
+            }
+            System.out.println();
+        }
 
     }
 
