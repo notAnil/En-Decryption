@@ -7,6 +7,9 @@ public class Main {
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
     private static String[] holder;
     private static ArrayList<ArrayList<ArrayList<Integer>>> behold = new ArrayList<>();
+    private static String stringSetOfXor = "sagjdskadhdjsklvdsmlcajh!++^13256788&+/&?=)(/=^()^=+)^=?^34653)'?^)+')+'/&JDVLSGDSsghzjıfapskkl";
+    private static char[] charSetForXor;
+    private static int[][] Xored;
 
     public static String shuffler(String parts){
 
@@ -106,10 +109,14 @@ public class Main {
     }
     public static String doItAgain(int n, String value){
         String res = value;
+        Xored = new int[n][2];
         for (int i=0;i<n;i++){
             res = encrypter(res);
             record();
         }
+        /*for (int i=0;i<n;i++){
+            res=Xorer(i,res);
+        }*/
         System.out.println(behold);
         return res;
     }
@@ -126,9 +133,36 @@ public class Main {
         file.close();
     }catch (IOException e){e.printStackTrace();}
     }
+    public static void converter(){
+        charSetForXor=new char[stringSetOfXor.length()];
+        for (int i = 0; i<stringSetOfXor.length();i++){
+            charSetForXor[i]=stringSetOfXor.charAt(i);
+        }
+    }
+    public static String Xorer(int n,String girdi){
+        double x=0;
+        String reThinking="";
+        char[] result= new char[girdi.length()];
+        for(int i=0;i<girdi.length();i++){
+            x=Math.random();
+            result[i]=girdi.charAt(i);
+            if (x>0.49){
+                int indexOfKey = (int) (Math.random()*charSetForXor.length);
+                char toBeChanged=girdi.charAt(i);
+                char res=(char) (toBeChanged^charSetForXor[indexOfKey]);
+                Xored[n][0]= i;
+                Xored[n][1]=indexOfKey;
+                result[i]=res;
+                reThinking+=result[i];
+            }
+        }
+        return reThinking;
+    }
     public static void main(String[] args) {
+        converter();
         makeAChoice();
         fileRecord();
 
     }
+
 }
