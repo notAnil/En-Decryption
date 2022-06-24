@@ -95,7 +95,7 @@ public class Main {
         System.out.println("what do you want?(Encryption or decryption)");
         String gir= sc.nextLine();
         gir=gir.toLowerCase(Locale.ROOT);
-        if(gir.equals("encryption")){
+        if(gir.equals("encryption")||gir.equals("e")){
             System.out.println("What is it to shuffle");
             String parts = sc.nextLine();
             System.out.println("How many times?");
@@ -115,10 +115,12 @@ public class Main {
             res = encrypter(res);
             record();
         }
+        System.out.println("before xor-> "+res.length());
+
         for (int i=0;i<n;i++){
             res=Xorer(i,res);
         }
-        System.out.println(res.length());
+        System.out.println("after xor -> "+res.length());
         System.out.println(behold);
         return res;
     }
