@@ -2,7 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import  java.util.*;
-import java.io.*;
+
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
@@ -12,7 +12,7 @@ public class Main {
     private static ArrayList<ArrayList<ArrayList<Integer>>> behold = new ArrayList<>();
     private static String stringSetOfXor = "abcd!=6";
     private static char[] charSetForXor;
-    private static int[][] Xored;
+    private static ArrayList<ArrayList<Integer>> Xored;
 
     public static String shuffler(String parts){
 
@@ -113,7 +113,7 @@ public class Main {
     public static String doItAgain(int n, String value){
         String res = value;
         XoredHolder=new ArrayList[n];
-        Xored = new int[n][2];
+        Xored = new ArrayList<>();
         for (int i=0;i<n;i++){
             res = encrypter(res);
             record();
@@ -142,6 +142,7 @@ public class Main {
         file.write("behold-> "+arrayOutput()+"\n");
         file.write("message->"+message+"\n");message="";
         file.write("xored-> "+xoredOutput()+"\n");
+        file.write("set-> "+ stringSetOfXor+"\n");
 
         file.close();
     }catch (IOException e){e.printStackTrace();}
@@ -163,19 +164,27 @@ public class Main {
             if (x>0.49){
 
                 do{
+                ArrayList<Integer> arr = new ArrayList<>(2);
                 result[i]='\0';
                 int indexOfKey = (int) (Math.random()*charSetForXor.length);
                 char toBeChanged=girdi.charAt(i);
                 char res=(char) (toBeChanged^charSetForXor[indexOfKey]);
-                Xored[n][0]= i;
-                Xored[n][1]=indexOfKey;
+                arr.add(i);
+                arr.add(indexOfKey);
                 result[i]=res;
+                Xored.add(arr);
+
 
             }while (result[i]=='\0');
+
+
             reThinking+= Character.toString(result[i]) ;
 
             }else reThinking+=result[i];
+
         }
+        XoredHolder[n]=Xored;
+        Xored=new ArrayList<>();
         return reThinking;
     }
     public static String arrayOutput(){
@@ -191,13 +200,15 @@ public class Main {
     }
     public static String xoredOutput(){
         String result="";
-        for (int i =0; i< Xored.length;i++){
+        for (int i= 0; i< XoredHolder.length;i++){
             result+="!";
-            result+=Xored[i][0];
-            result+=",";
-            result+=Xored[i][1];
+            String holder="";
+            holder+=XoredHolder[i];
+            result+=holder.substring(1,holder.length()-1);
             result+="!";
+
         }
+
 
         return result;
     }
@@ -206,14 +217,8 @@ public class Main {
         converter();
         makeAChoice();
         fileRecord();
-        for (int i=0;i< Xored.length;i++){
-            System.out.print("[");
-            for (int j=0;j<Xored[0].length;j++){
-                System.out.print(Xored[i][j]+", ");
-            }
-            System.out.println("]");
-        }
 
     }
 
 }
+
