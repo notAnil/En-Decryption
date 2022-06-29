@@ -6,7 +6,9 @@ import java.io.*;
 public class Main {
     public static Scanner sc = new Scanner(System.in);
     public static ArrayList<ArrayList<Integer>> code = new ArrayList<>();
+    private static String message;
     private static String[] holder;
+    private static ArrayList[] XoredHolder;
     private static ArrayList<ArrayList<ArrayList<Integer>>> behold = new ArrayList<>();
     private static String stringSetOfXor = "abcd!=6";
     private static char[] charSetForXor;
@@ -110,6 +112,7 @@ public class Main {
     }
     public static String doItAgain(int n, String value){
         String res = value;
+        XoredHolder=new ArrayList[n];
         Xored = new int[n][2];
         for (int i=0;i<n;i++){
             res = encrypter(res);
@@ -121,7 +124,9 @@ public class Main {
             res=Xorer(i,res);
         }
         System.out.println("after xor -> "+res.length());
-        System.out.println(behold);
+        System.out.println("Behold-> "+behold);
+        System.out.println(arrayOutput());
+        message = res;
         return res;
     }
     public static void record(){
@@ -133,7 +138,11 @@ public class Main {
     public static void fileRecord(){ // will store the behold arraylist in the key.txt file in an unique way
     try {
         BufferedWriter file = new BufferedWriter(new FileWriter("key.txt"));
-        file.write("This is the storage");
+        file.write("This is the storage\n");
+        file.write("behold-> "+arrayOutput()+"\n");
+        file.write("message->"+message+"\n");message="";
+        file.write("xored-> "+xoredOutput()+"\n");
+
         file.close();
     }catch (IOException e){e.printStackTrace();}
     }
@@ -169,16 +178,40 @@ public class Main {
         }
         return reThinking;
     }
+    public static String arrayOutput(){
+        String result="";
+        for (int i=0;i< behold.size();i++) {
+            String holder ="";
+            holder += behold.get(i);
+            result+="!";
+            result+=holder.substring(1,holder.length()-1);
+            result+="!";
+        }
+        return result;
+    }
+    public static String xoredOutput(){
+        String result="";
+        for (int i =0; i< Xored.length;i++){
+            result+="!";
+            result+=Xored[i][0];
+            result+=",";
+            result+=Xored[i][1];
+            result+="!";
+        }
+
+        return result;
+    }
 
     public static void main(String[] args) {
         converter();
         makeAChoice();
         fileRecord();
         for (int i=0;i< Xored.length;i++){
+            System.out.print("[");
             for (int j=0;j<Xored[0].length;j++){
-                System.out.print(Xored[i][j]+" ");
+                System.out.print(Xored[i][j]+", ");
             }
-            System.out.println();
+            System.out.println("]");
         }
 
     }
