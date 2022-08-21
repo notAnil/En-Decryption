@@ -76,7 +76,7 @@ public class Main {
         for(int k=0;k<res.length;k++){
             fin+=res[k];
         }
-        System.out.println(code);
+
         return fin;
     }
    /* public static String deshuffler(){ //update
@@ -107,6 +107,7 @@ public class Main {
             System.out.println("What is the path to the key?\n"+ "Please turn \\ signs into \\\\");
             String key = sc.nextLine();
             fileRead(key);
+            decyrption();
         }
 
     }
@@ -118,14 +119,12 @@ public class Main {
             res = encrypter(res);
             record();
         }
-        System.out.println("before xor-> "+res.length());
+
 
         for (int i=0;i<n;i++){
             res=Xorer(i,res);
         }
-        System.out.println("after xor -> "+res.length());
-        System.out.println("Behold-> "+behold);
-        System.out.println(arrayOutput());
+
         message = res;
         return res;
     }
@@ -156,9 +155,20 @@ public class Main {
             while((s0= input.readLine())!=null){
                 x++;
 
-
+                if (x==2){
+                    behDec(s0);
+                }
                 if (x==3){
                   xorDec(s0);
+                }
+                if (x==4){
+                    setset(s0);
+                }
+                if (x == 5) {
+                    messet1(s0);
+                }
+                if (x == 6) {
+                    messet2(s0);
                 }
 
             }
@@ -273,8 +283,76 @@ public class Main {
 
 
     }
-    //public static void behDec(String crypted){}
-    //public static void setset(String setcr){}
+    public static void behDec(String crypted){
+        ArrayList<Integer> ar1;
+        ArrayList<ArrayList<Integer>>arr2;
+        String oper =crypted.substring(crypted.indexOf("!")+1);
+        while(oper.length()>1) {
+            arr2=new ArrayList<>();
+            while(oper.indexOf("!")>oper.indexOf("]")){
+                int index1=oper.indexOf("[")+1;
+                int index2=oper.indexOf("]");
+                int index3=oper.indexOf(",");
+                int x,y;
+                try {
+                    x = Integer.parseInt(oper.substring(index1,index3));
+                    y = Integer.parseInt(oper.substring(index3+2,index2));
+                    ar1=new ArrayList<>();
+                    ar1.add(x);
+                    ar1.add(y);
+                    arr2.add(ar1);
+                    oper=oper.substring(oper.indexOf("]")+2);
+                }//finding x and y as int values
+                catch (NumberFormatException e) {
+                    System.out.println("Error at integer conversion at xor decryption");
+                }
+
+
+            }
+            behold.add(arr2);
+            if (oper.length()>1){oper=oper.substring(1);}
+        }
+
+
+    }
+    public static void setset(String setcr){
+        stringSetOfXor=setcr.substring(setcr.indexOf(" ")+1);
+    }
+    public static void messet1(String mes){
+        message=mes.substring(mes.indexOf(">")+1);
+    }
+    public static void messet2(String mes){
+        message+="\n"+mes;
+    }
+    public static void decyrption(){
+        char [] res= new char[message.length()];
+        for(int i = 0; i<message.length();i++){
+            res[i]=message.charAt(i);
+        }
+
+        for (int i = XoredHolder.length-1; i >=0 ; i--) {
+            for (int j = XoredHolder[i].size()-1; j >=0; j--) {
+                ArrayList<Integer> arr0;
+                arr0= (ArrayList<Integer>) XoredHolder[i].get(j);
+                res[arr0.get(0)]^=charSetForXor[arr0.get(1)];
+            }
+        }
+        for (int i = behold.size()-1; i >=0 ; i--) {
+            for (int j =  behold.get(i).size()-1; j >=0; j--) {
+                ArrayList<Integer> arr0;
+                arr0=behold.get(i).get(j);
+                char temp = res[arr0.get(0)];
+                res[arr0.get(0)]=res[arr0.get(1)];
+                res[arr0.get(1)]=temp;
+
+            }
+        }
+        String result="";
+        for (int i = 0; i < res.length; i++) {
+            result+=Character.toString(res[i]);
+        }
+        System.out.println("decrypted text-> "+result);
+    }
 
 
     public static void main(String[] args) {
@@ -282,10 +360,13 @@ public class Main {
         makeAChoice();
         //fileRecord();
 
-        for (int i=0;i<XoredHolder.length;i++){
+        /*for (int i=0;i<XoredHolder.length;i++){
             System.out.print(XoredHolder[i]);
         }
-
+        System.out.println();
+        System.out.println(behold);
+        System.out.println(stringSetOfXor);
+        System.out.println(message);*/
     }
 
 }
