@@ -140,9 +140,9 @@ public class Main {
         BufferedWriter file = new BufferedWriter(new FileWriter("key.txt"));
         file.write("This is the storage\n");
         file.write("behold-> "+arrayOutput()+"\n");
-        file.write("message->"+message+"\n");message="";
         file.write("xored-> "+xoredOutput()+"\n");
         file.write("set-> "+ stringSetOfXor+"\n");
+        file.write("message->"+message+"\n");message="";
 
         file.close();
     }catch (IOException e){e.printStackTrace();}
@@ -157,7 +157,7 @@ public class Main {
                 x++;
 
 
-                if (x==5){
+                if (x==3){
                   xorDec(s0);
                 }
 
