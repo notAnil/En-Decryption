@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import  java.util.*;
 
 public class Main {
@@ -104,10 +102,12 @@ public class Main {
             int n = sc.nextInt();
 
             System.out.println(doItAgain(n,parts));
-        } /*else if (gir.equals("decryption")){
-            System.out.println(shuffler());
-            System.out.println(deshuffler());
-        }*/
+            fileRecord();
+        } else if (gir.equals("decryption")||gir.equals("d")){
+            System.out.println("What is the path to the key?\n"+ "Please turn \\ signs into \\\\");
+            String key = sc.nextLine();
+            fileRead(key);
+        }
 
     }
     public static String doItAgain(int n, String value){
@@ -146,6 +146,26 @@ public class Main {
 
         file.close();
     }catch (IOException e){e.printStackTrace();}
+    }
+    public static void fileRead(String s){
+        try {
+            BufferedReader input = new BufferedReader(new FileReader(s));
+
+            int x=0;
+            String s0;
+            while((s0= input.readLine())!=null){
+                x++;
+
+
+                if (x==5){
+                  xorDec(s0);
+                }
+
+            }
+            input.close();
+
+
+        }catch(IOException e){e.printStackTrace();}
     }
     public static void converter(){
         charSetForXor=new char[stringSetOfXor.length()];
@@ -212,11 +232,59 @@ public class Main {
 
         return result;
     }
+    public static void xorDec(String crypted){
+        int ind =-1;
+        int times = 0;
+        String c= crypted;
+        while(c.length()>0){
+            times++;
+            c=c.substring(c.indexOf("!")+1);
+        }
+        XoredHolder= new ArrayList[times/2];
+        ArrayList<Integer> ar1;
+        ArrayList<ArrayList<Integer>>arr2;
+        String oper =crypted.substring(crypted.indexOf("!")+1);
+        while(oper.length()>1) {
+            ind++;
+            arr2=new ArrayList<>();
+            while(oper.indexOf("!")>oper.indexOf("]")){
+                int index1=oper.indexOf("[")+1;
+                int index2=oper.indexOf("]");
+                int index3=oper.indexOf(",");
+                int x,y;
+                try {
+                    x = Integer.parseInt(oper.substring(index1,index3));
+                    y = Integer.parseInt(oper.substring(index3+2,index2));
+                    ar1=new ArrayList<>();
+                    ar1.add(x);
+                    ar1.add(y);
+                    arr2.add(ar1);
+                    oper=oper.substring(oper.indexOf("]")+2);
+            }//finding x and y as int values
+            catch (NumberFormatException e) {
+                System.out.println("Error at integer conversion at xor decryption");
+            }
+
+
+        }
+            XoredHolder[ind]=arr2;
+            if (oper.length()>1){oper=oper.substring(1);}
+        }
+
+
+    }
+    //public static void behDec(String crypted){}
+    //public static void setset(String setcr){}
+
 
     public static void main(String[] args) {
         converter();
         makeAChoice();
-        fileRecord();
+        //fileRecord();
+
+        for (int i=0;i<XoredHolder.length;i++){
+            System.out.print(XoredHolder[i]);
+        }
 
     }
 

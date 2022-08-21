@@ -1,5 +1,0 @@
-This is the storage
-behold-> ![0, 2]!![0, 2]!![0, 1]!![0, 1]!
-message->mXs
-xored-> ![1, 5], [2, 2]!!!![2, 2]!!!
-set-> abcd!=6
