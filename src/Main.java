@@ -205,7 +205,7 @@ public class Main {
                 Xored.add(arr);
 
 
-            }while (result[i]=='\0');
+            }while (result[i]=='\0'||result[i]=='\n');
 
 
             reThinking+= Character.toString(result[i]) ;
